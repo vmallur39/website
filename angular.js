@@ -25,7 +25,7 @@ angular.module('myApp', ['ngMaterial']).controller('myCtrl', function($http, $md
             gapi.client.load('drive', 'v3').then(function() { 
                 gapi.client.drive.files.list({
                     'fields': 'files(iconLink, id, mimeType, name, parents, webViewLink)',
-                    'orderBy': 'folder',
+                    'orderBy': 'folder, name',
                     'q': "'root' in parents"
                 }).then(function(response) {
                     $scope.files = response.result.files;    
@@ -50,7 +50,7 @@ angular.module('myApp', ['ngMaterial']).controller('myCtrl', function($http, $md
             }).then(function(response) {
                 gapi.client.drive.files.list({
                     'fields': 'files(iconLink, id, mimeType, name, parents, webViewLink)',
-                    'orderBy': 'folder',
+                    'orderBy': 'folder, name',
                     'q': "'" + response.result.parents[0] + "' in parents"
                 }).then(function(files) {
                     $scope.files = files.result.files;                   
@@ -67,7 +67,7 @@ angular.module('myApp', ['ngMaterial']).controller('myCtrl', function($http, $md
         if (file.mimeType === 'application/vnd.google-apps.folder') {            
             gapi.client.drive.files.list({
                 'fields': 'files(iconLink, id, mimeType, name, parents, webViewLink)',
-                'orderBy': 'folder',
+                'orderBy': 'folder, name',
                 'q': "'" + file.id + "' in parents"
             }).then(function(response) {
                 $scope.files = response.result.files; 
